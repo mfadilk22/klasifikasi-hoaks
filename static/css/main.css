@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins';
+    /* border: solid 1px black; */
 }
 body{
     display: flex;
@@ -16,11 +17,12 @@ span{
 }
 .content{
     display: flex;
-    /* align-content: center; */
+    align-content: center;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 800px;
+    /* width: 800px; */
+    flex-wrap: wrap;
 }
 
 .title{
@@ -92,10 +94,29 @@ input[type="radio"]{
 }
 
 .proses{
+    /* width:800px; */
     display:flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
+    flex-wrap: wrap;
+    flex: 200px;
     margin-top: 12px;
+}
+
+.hasil{
+    align-self: flex-start;
+}
+
+@media(max-width: 660px) {    
+    .proses{
+        flex-direction: column;
+    }
+    .hasil{
+        margin-top:24px;
+    }
+    .vl{
+        display: none;
+    }
 }
 
 .form-style-1 li{
