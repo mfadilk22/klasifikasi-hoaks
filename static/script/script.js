@@ -1,4 +1,4 @@
-// const Chart = require('chart.js');
+
 
 
 function toggle(){
@@ -49,23 +49,3 @@ closebtn.addEventListener("click", function() {
     filename.style.display = 'none';
 });
 
-let hasil_prediksi = parseFloat(document.querySelector(".hasil_prediksi"));
-const datachart = {
-    labels: [
-        'Hoaks',
-        'Tidak Hoaks',
-      ],
-      datasets: [{
-        label: 'My First Dataset',
-        data: [hasil_prediksi, 100-hasil_prediksi],
-        backgroundColor: [
-          'rgb(255, 205, 86)',
-          'rgb(54, 162, 235)',
-        ],
-        hoverOffset: 4
-      }]
-}
-const myChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: datachart,
-});

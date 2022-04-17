@@ -1,15 +1,17 @@
-const Chart = require('chart.js');
-let hasil_prediksi = parseFloat(document.querySelector(".hasil_prediksi"));
-let ctx = document.getElementById("myChart")
+// const Chart = require('chart.js');
+
+var hasil_prediksi = document.querySelector(".hasil_prediksi");
+var hasil = Number(hasil_prediksi)
+var ctx = document.getElementById("myChart");
 
 const datachart = {
     labels: [
-        'Hoaks',
+        hasil_prediksi,
         'Tidak Hoaks',
       ],
       datasets: [{
         label: 'My First Dataset',
-        data: [hasil_prediksi, 100-hasil_prediksi],
+        data: [hasil, 100-hasil],
         backgroundColor: [
           'rgb(255, 205, 86)',
           'rgb(54, 162, 235)',
@@ -17,7 +19,12 @@ const datachart = {
         hoverOffset: 4
       }]
 }
-const myChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: datachart,
-});
+
+const config = {
+  type: 'doughnut',
+  data: datachart,
+  options: {
+    responsive: true,
+  },
+}
+const myChart = new Chart(ctx, config);

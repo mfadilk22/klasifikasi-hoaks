@@ -9,12 +9,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='Icon2.ico') }}">
     <script src="https://kit.fontawesome.com/14481c1a0f.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
 </head>
 
 <body>
 <div class="content">
     <div class="title">
-        Klasifikasi Hoaks Seputar Vaksin Covid-19
+       <a href="{{ url_for('index') }}" style="text-decoration:none; color:inherit;"> Klasifikasi Hoaks Seputar Vaksin Covid-19</a>
     </div>
     <div class="container">
         <div class="opt-rb">
@@ -105,7 +106,5 @@
 <script type="text/javascript" src="{{ url_for('static', filename='script/grafik.js') }}"></script>
 
 <!-- <script src="D:\FADIL\klasifikasi-hoaks\node_modules\chartjs\dist\chart.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
-
 </body>
 </html>

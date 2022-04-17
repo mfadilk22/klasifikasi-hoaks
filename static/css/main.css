@@ -228,8 +228,8 @@ input[type="radio"]{
     background:#fafbfd;
     margin-bottom: 12px;
     border: 1px dashed #97a6c3;
-    stroke-dasharray:9%2c 48 ;
-    stroke-dashoffset:23;stroke-linecap:round;
+    stroke-dashoffset:23;
+    stroke-linecap:round;
 }
 .select-file-txt{
     color: #262730;
