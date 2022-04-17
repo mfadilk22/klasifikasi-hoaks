@@ -48,8 +48,11 @@
                 <div class="hasil">
                     <div class="caption">Hasil Klasifikasi</div>
                     <p id="result">
-                        <span>{{ prediksi }}</span>
+                        <span class="hasil_prediksi">{{ prediksi }}</span>
                     </p>
+                    <div>
+                        <canvas id="myChart" width="400" height="400"></canvas>
+                    </div>
                     
                 </div>
             </div>
@@ -86,8 +89,11 @@
                 <div class="hasil">
                     <div class="caption">Hasil Klasifikasi</div>
                     <p id="result">
-                        <span>{{ prediksi }}</span>
+                        <span class="hasil_prediksi">{{ prediksi }}</span>
                     </p>
+                    <div>
+                        <canvas id="myChart" width="400" height="400"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -95,6 +101,11 @@
 </div>
 
 <script type="text/javascript" src="{{ url_for('static', filename='script/script.js') }}"></script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='script/grafik.js') }}"></script>
+
+<!-- <script src="D:\FADIL\klasifikasi-hoaks\node_modules\chartjs\dist\chart.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
 
 </body>
 </html>

@@ -1,3 +1,6 @@
+// const Chart = require('chart.js');
+
+
 function toggle(){
     let r1 = document.getElementById('radio-1');
     let r2 = document.getElementById('radio-2');
@@ -37,11 +40,32 @@ button.addEventListener( "click", function() {
     return false;
  });
 
- fileInput.addEventListener( "change", function() {  
+fileInput.addEventListener( "change", function() {  
     filename.style.display = 'flex'
     the_return.innerHTML = this.files[0].name;  
 });
 
 closebtn.addEventListener("click", function() {
     filename.style.display = 'none';
+});
+
+let hasil_prediksi = parseFloat(document.querySelector(".hasil_prediksi"));
+const datachart = {
+    labels: [
+        'Hoaks',
+        'Tidak Hoaks',
+      ],
+      datasets: [{
+        label: 'My First Dataset',
+        data: [hasil_prediksi, 100-hasil_prediksi],
+        backgroundColor: [
+          'rgb(255, 205, 86)',
+          'rgb(54, 162, 235)',
+        ],
+        hoverOffset: 4
+      }]
+}
+const myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: datachart,
 });
