@@ -56,7 +56,7 @@
         </div>
         <div id="upload-file">
             <div class="upload-file">
-                <form class="form-2" action="" method="POST" enctype="multipart/form-data">
+                <form class="form-2" action="{{ url_for('prediksi_file') }}" method="POST" enctype="multipart/form-data">
                     <div class="caption">Pilih berkas</div>
                     <ul class="form-style-1">
                         <li>
@@ -85,6 +85,9 @@
                 <div class="vl"></div>
                 <div class="hasil">
                     <div class="caption">Hasil Klasifikasi</div>
+                    <p id="result">
+                        <span>{{ prediksi }}</span>
+                    </p>
                 </div>
             </div>
         </div>

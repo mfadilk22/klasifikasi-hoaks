@@ -5,12 +5,13 @@ import os
 from werkzeug.utils import secure_filename
 
 import pickle
-# import tensorflow as tf
-# from tensorflow import keras
-# from tensorflow.keras.preprocessing.text import Tokenizer
-# from tensorflow.keras.preprocessing.sequence import pad_sequences
-# from flask_wtf import FlaskForm
-# from wtforms import FileField
+import tensorflow as tf
+import numpy as np
+from tensorflow import keras
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+from flask_wtf import FlaskForm
+from wtforms import FileField
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -21,19 +22,43 @@ app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
 
 
 model_path = 'models/'
-#load model
-# model = tf.keras.models.load_model(model_path+"model_2.h5")
+# load model
+model = tf.keras.models.load_model(model_path+"model_4.h5")
 
-#load tokenizer
-# token = Tokenizer()
-# with open(model_path+'token_2.pickle', 'rb') as handle:
-#     token = pickle.load(handle)
+# load tokenizer
+token = Tokenizer()
+with open(model_path+'token_4.pickle', 'rb') as handle:
+    token = pickle.load(handle)
     
-# def klasifikasi_kata(sentences):
-#     sequences = token.texts_to_sequences(sentences)
-#     padded = pad_sequences(sequences, maxlen=100, padding="post", truncating="post")
-#     res = model.predict(padded)    
-#     return res
+def klasifikasi_kata(sentences):
+    teks = [sentences]
+    sequences = token.texts_to_sequences(teks)
+    padded = pad_sequences(sequences, maxlen=40, padding="post", truncating="post")
+    res = model.predict(padded) 
+    res_string = np.array_str(res)
+    return res_string
+
+def klasifikasi_file(sentences):
+    teks = [sentences]
+    sequences = token.texts_to_sequences(teks)
+    padded = pad_sequences(sequences, maxlen=40, padding="post", truncating="post")
+    res = model.predict(padded) 
+    res_string = np.array_str(res)
+    return res_string
+
+def upload_files():
+    if request.method == "POST":        
+        f = request.files['file']
+        filename = secure_filename(f.filename)
+        if filename !='':
+            file_ext = os.path.splitext(filename)[1]
+            if file_ext not in app.config['UPLOAD_EXTENSIONS']:
+                return "File tidak mendukung", 400    
+            saved_file = f.save(os.path.join(app.config['UPLOAD_PATH'],filename))
+            file = open(app.config['UPLOAD_PATH']+"/"+filename,"r")        
+            content = file.read()
+        return ""        
+        return redirect(url_for('index'))
 
 @app.route('/', methods=['GET'])
 def index():
@@ -44,23 +69,20 @@ def index():
 def prediksi_teks():
     if request.method == "POST":        
         message = request.form['teks']
-        # hasil_pred = klasifikasi_kata(message)
-        # return hasil_pred    
-    return render_template('index.html') #prediksi = hasil_pred)
+        hasil_pred = klasifikasi_kata(message)
+        # return render_template(('index.html'), prediksi = hasil_pred)    
+    return render_template(('index.html'), prediksi = hasil_pred)
 
-# def upload_files():
-#     if request.method == "POST":        
-#         f = request.files['file']
-#         filename = secure_filename(f.filename)
-#         if filename !='':
-#             file_ext = os.path.splitext(filename)[1]
-#             if file_ext not in app.config['UPLOAD_EXTENSIONS']:
-#                 return "File tidak mendukung", 400    
-#             saved_file = f.save(os.path.join(app.config['UPLOAD_PATH'],filename))
-#             file = open(app.config['UPLOAD_PATH']+"/"+filename,"r")        
-#             content = file.read()
-#         return ""        
-#         return redirect(url_for('index'))  
+@app.route('/klasifikasi-file', methods=['GET',"POST"])
+def prediksi_file():
+    if request.method == "POST":  
+        file = open(app.config['UPLOAD_PATH']+"/"+filename,"r")        
+        message = file.read()
+        hasil_pred = klasifikasi_file(message)
+        # return render_template(('index.html'), prediksi = hasil_pred)    
+    return render_template(('index.html'), prediksi = hasil_pred)
+
+  
 
 @app.errorhandler(413)
 def too_large(e):
