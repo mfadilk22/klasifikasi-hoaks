@@ -57,12 +57,13 @@ def upload_files():
             saved_file = f.save(os.path.join(app.config['UPLOAD_PATH'],filename))
             file = open(app.config['UPLOAD_PATH']+"/"+filename,"r")        
             content = file.read()
-        return ""        
-        return redirect(url_for('index'))
+            file.close()            
+        #return ""   
+    os.remove(app.config['UPLOAD_PATH']+"/"+filename)     
+    return content
 
 @app.route('/', methods=['GET'])
-def index():
-    files = os.listdir(app.config['UPLOAD_PATH'])    
+def index():    
     return render_template('index.html')
 
 @app.route('/klasifikasi', methods=['GET',"POST"])
@@ -72,15 +73,19 @@ def prediksi_teks():
         hasil_pred = klasifikasi_kata(message)
         # return render_template(('index.html'), prediksi = hasil_pred)    
     return render_template(('index.html'), prediksi = hasil_pred)
+    #return redirect(url_for('index', prediksi = hasil_pred))
 
 @app.route('/klasifikasi-file', methods=['GET',"POST"])
 def prediksi_file():
     if request.method == "POST":  
-        file = open(app.config['UPLOAD_PATH']+"/"+filename,"r")        
-        message = file.read()
+        # filename = upload_files()
+        # file = open(app.config['UPLOAD_PATH']+"/"+filename,"r")        
+        message = upload_files()
         hasil_pred = klasifikasi_file(message)
-        # return render_template(('index.html'), prediksi = hasil_pred)    
-    return render_template(('index.html'), prediksi = hasil_pred)
+        
+        # return render_template(('index.html'), prediksi = hasil_pred) 
+    return render_template(('index.html'), prediksi = hasil_pred)   
+    #return redirect(url_for('index', prediksi = hasil_pred))
 
   
 
