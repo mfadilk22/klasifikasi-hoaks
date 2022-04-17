@@ -35,7 +35,7 @@ def klasifikasi_kata(sentences):
     sequences = token.texts_to_sequences(teks)
     padded = pad_sequences(sequences, maxlen=40, padding="post", truncating="post")
     res = model.predict(padded) 
-    res_string = np.array_str(res)
+    res_string = str(res[0][0])
     return res_string
 
 def klasifikasi_file(sentences):
@@ -43,7 +43,7 @@ def klasifikasi_file(sentences):
     sequences = token.texts_to_sequences(teks)
     padded = pad_sequences(sequences, maxlen=40, padding="post", truncating="post")
     res = model.predict(padded) 
-    res_string = np.array_str(res)
+    res_string = str(res[0][0])
     return res_string
 
 def upload_files():
