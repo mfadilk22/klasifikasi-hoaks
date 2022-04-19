@@ -11,7 +11,7 @@ const datachart = {
       ],
       datasets: [{
         label: 'My First Dataset',
-        data: [hasil, 100-hasil],
+        data: [60, 100-60],
         backgroundColor: [
           'rgb(255, 205, 86)',
           'rgb(54, 162, 235)',
