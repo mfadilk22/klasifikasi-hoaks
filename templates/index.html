@@ -48,13 +48,14 @@
                 <div class="vl"></div>
                 <div class="hasil">
                     <div class="caption">Hasil Klasifikasi</div>
+                    <div class="Hasil_prediksi">
                     <p id="result">
-                        <span class="hasil_prediksi">{{ prediksi }}</span>
+                        <span class="hasil_prediksi" data-prediksi="{{ prediksi }}">{{ prediksi }} % Hoaks</span>
                     </p>
                     <div>
-                        <canvas id="myChart" width="400" height="400"></canvas>
+                        <canvas id="myChart" width="300" height="300"></canvas>
                     </div>
-                    
+                    </div>                    
                 </div>
             </div>
         </div>
@@ -89,12 +90,14 @@
                 <div class="vl"></div>
                 <div class="hasil">
                     <div class="caption">Hasil Klasifikasi</div>
+                    <div class="Hasil_prediksi">
                     <p id="result">
-                        <span class="hasil_prediksi">{{ prediksi }}</span>
+                        <span class="hasil_prediksi" data-prediksi="{{ prediksi }}">{{ prediksi }} % Hoaks</span>
                     </p>
                     <div>
-                        <canvas id="myChart" width="400" height="400"></canvas>
+                        <canvas id="myChart" width="300" height="300"></canvas>
                     </div>
+                    </div> 
                 </div>
             </div>
         </div>

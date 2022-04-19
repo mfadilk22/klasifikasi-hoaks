@@ -244,6 +244,10 @@ small span{
     font-weight: 500;
 }
 
+.Hasil_prediksi{
+    display: flex;
+}
+
 .filename{
     display:flex;
     align-items: center;
