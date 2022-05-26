@@ -1,4 +1,5 @@
 from fileinput import filename
+from tkinter import ANCHOR
 from unittest import result
 from flask import Flask, redirect, url_for, render_template, request, send_from_directory
 import os
@@ -23,17 +24,17 @@ app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
 
 model_path = 'models/'
 # load model
-model = tf.keras.models.load_model(model_path+"model_4.h5")
+model = tf.keras.models.load_model(model_path+"model_8.h5")
 
 # load tokenizer
 token = Tokenizer()
-with open(model_path+'token_4.pickle', 'rb') as handle:
+with open(model_path+'token_8.pickle', 'rb') as handle:
     token = pickle.load(handle)
     
 def klasifikasi_kata(sentences):
     teks = [sentences]
     sequences = token.texts_to_sequences(teks)
-    padded = pad_sequences(sequences, maxlen=40, padding="post", truncating="post")
+    padded = pad_sequences(sequences, maxlen=20, padding="post", truncating="post")
     res = model.predict(padded)
     res_rounded_value = round((res[0][0]*100),3)
     res_string = res_rounded_value
@@ -42,7 +43,7 @@ def klasifikasi_kata(sentences):
 def klasifikasi_file(sentences):
     teks = [sentences]
     sequences = token.texts_to_sequences(teks)
-    padded = pad_sequences(sequences, maxlen=40, padding="post", truncating="post")
+    padded = pad_sequences(sequences, maxlen=20, padding="post", truncating="post")
     res = model.predict(padded) 
     res_rounded_value = round((res[0][0]*100),3)
     res_string = res_rounded_value
@@ -74,7 +75,7 @@ def prediksi_teks():
         message = request.form['teks']
         hasil_pred = klasifikasi_kata(message)
         # return render_template(('index.html'), prediksi = hasil_pred)    
-    return render_template(('index.html'), prediksi = hasil_pred)
+    return render_template(('index.html'), prediksi = hasil_pred, pesan = message)
     #return redirect(url_for('index', prediksi = hasil_pred))
 
 @app.route('/klasifikasi-file', methods=['GET',"POST"])
@@ -86,7 +87,7 @@ def prediksi_file():
         hasil_pred = klasifikasi_file(message)
         
         # return render_template(('index.html'), prediksi = hasil_pred) 
-    return render_template(('index.html'), prediksi = hasil_pred)   
+    return render_template(('index.html'), prediksi = hasil_pred, anchor="upload-file")   
     #return redirect(url_for('index', prediksi = hasil_pred))
 
   
