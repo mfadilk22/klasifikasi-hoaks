@@ -24,11 +24,11 @@ app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
 
 model_path = 'models/'
 # load model
-model = tf.keras.models.load_model(model_path+"model_8.h5")
+model = tf.keras.models.load_model(model_path+"model_FINAL.h5")
 
 # load tokenizer
 token = Tokenizer()
-with open(model_path+'token_8.pickle', 'rb') as handle:
+with open(model_path+'token_FINAL.pickle', 'rb') as handle:
     token = pickle.load(handle)
     
 def klasifikasi_kata(sentences):
