@@ -3,6 +3,7 @@ from tkinter import ANCHOR
 from unittest import result
 from flask import Flask, redirect, url_for, render_template, request, send_from_directory
 import os
+from jinja2 import Markup
 from werkzeug.utils import secure_filename
 import spacy
 from spacy.util import minibatch, compounding
@@ -19,18 +20,16 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from flask_wtf import FlaskForm
 from wtforms import FileField
 from flaskext.markdown import Markdown
-from .mdx_simpl import SimpleExtension
 
 app = Flask(__name__)
-md = Markdown(app)
-md.register_extension(SimpleExtension)
-
 app.config["DEBUG"] = True
 app.config['UPLOAD_PATH'] = "uploaded_files"
 app.config['ALLOWED_EXTENSIONS'] = ['txt']
 app.config['UPLOAD_EXTENSIONS'] = ['.txt']
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
+Markdown(app)
 
+HTML_WRAPPER = """<div style="overflow-x: auto; border: 1px solid #e6e9ef; border-radius: 0.25rem; padding: 1rem">{}</div>"""
 
 model_path = 'models/'
 # load model
@@ -54,7 +53,8 @@ def klasifikasi_kata(sentences):
     hasil_dict["klasifikasi"] = res_string
 
     doc = model_ner(sentences)
-    hasil_doc = displacy.render(doc, style="ent", page=True)
+    hasil_doc = displacy.render(doc, style="ent")
+    hasil_doc = Markup(hasil_doc)
     # hasil_doc = hasil_doc.replace("\n\n","\n")
     hasil_dict['ner'] = hasil_doc
 
@@ -72,7 +72,8 @@ def klasifikasi_file(sentences):
     hasil_dict["klasifikasi"] = res_string
 
     doc = model_ner(sentences)
-    hasil_doc = displacy.render(doc, style="ent", page=True)
+    hasil_doc = displacy.render(doc, style="ent")
+    hasil_doc = Markup(hasil_doc)
     # hasil_doc = hasil_doc.replace("\n\n","\n")
     hasil_dict['ner'] = hasil_doc
 
