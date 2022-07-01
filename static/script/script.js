@@ -10,14 +10,10 @@ function toggle(){
     if (r1.checked){
         el1.style.display = 'flex';
         el2.style.display = 'none';
-        console.log( el1.style.display);
-        console.log( el2.style.display);
     }
     else{
         el1.style.display = 'none';
         el2.style.display = 'flex';
-        console.log( el1.style.display);
-        console.log( el2.style.display);
     }
 }
 
@@ -33,6 +29,7 @@ var the_return = document.querySelector(".doc-name");
 var button = document.querySelector(".input-file-trigger");
 let closebtn = document.querySelector(".close");
 let filename = document.querySelector(".filename");
+let submit_file_btn = document.getElementById("upload-file").getElementsByClassName("submit")[0];
 
 filename.style.display = 'none';
 
@@ -48,5 +45,9 @@ fileInput.addEventListener( "change", function() {
 
 closebtn.addEventListener("click", function() {
     filename.style.display = 'none';
+});
+
+submit_file_btn.addEventListener("click", function() {
+    el2.style.display = 'none';
 });
 

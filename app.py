@@ -105,7 +105,7 @@ def prediksi_teks():
         message = request.form['teks']
         hasil_pred = klasifikasi_kata(message)
         # return render_template(('index.html'), prediksi = hasil_pred)    
-    return render_template(('index.html'), prediksi = hasil_pred['klasifikasi'], ner = hasil_pred['ner'],pesan = message)
+    return render_template(('index.html'), prediksi_teks = hasil_pred['klasifikasi'], ner_teks = hasil_pred['ner'],pesan = message)
     #return redirect(url_for('index', prediksi = hasil_pred))
 
 @app.route('/klasifikasi-file', methods=['GET',"POST"])
@@ -117,7 +117,7 @@ def prediksi_file():
         hasil_pred = klasifikasi_file(message)
         
         # return render_template(('index.html'), prediksi = hasil_pred) 
-    return render_template(('index.html'),prediksi = hasil_pred['klasifikasi'], ner = hasil_pred['ner'], anchor="upload-file")   
+    return render_template(('index.html'),prediksi_file = hasil_pred['klasifikasi'], ner_file = hasil_pred['ner'])   
     #return redirect(url_for('index', prediksi = hasil_pred))
 
   
