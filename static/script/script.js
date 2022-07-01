@@ -1,6 +1,3 @@
-
-
-
 function toggle(){
     let r1 = document.getElementById('radio-1');
     let r2 = document.getElementById('radio-2');
@@ -13,10 +10,14 @@ function toggle(){
     if (r1.checked){
         el1.style.display = 'flex';
         el2.style.display = 'none';
+        console.log( el1.style.display);
+        console.log( el2.style.display);
     }
     else{
         el1.style.display = 'none';
         el2.style.display = 'flex';
+        console.log( el1.style.display);
+        console.log( el2.style.display);
     }
 }
 

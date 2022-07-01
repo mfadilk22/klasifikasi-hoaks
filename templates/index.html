@@ -70,13 +70,12 @@
                             <p class="caption">Entitas dalam teks</p>
                             <span class="hasil_prediksi">{{ ner }}</span>
                         </div>
-
                     </div>
                 </div>
             </div>
             <div id="upload-file">
                 <div class="upload-file">
-                    <form class="form-2" action="{{ url_for('prediksi_file') }}" method="POST"
+                    <form class="form-2" action="{{ url_for('prediksi_file', _anchor='upload-file') }}" method="POST"
                         enctype="multipart/form-data">
                         <div class="caption">Pilih berkas</div>
                         <ul class="form-style-1">
@@ -88,7 +87,7 @@
                                         <small>Format <span>txt</span> | ukuran maksimal <span>1 mb</span></small>
                                     </div>
                                     <div class="file-input">
-                                        <input type="file" id="file" name="file" class="file" accept=".txt">
+                                        <input type="file" id="file" name="file" class="file" accept=".txt" required>
                                         <label for="file" class="input-file-trigger">Pilih file</label>
                                     </div>
                                 </div>
@@ -105,18 +104,31 @@
                         </ul>
                     </form>
                     <div class="vl"></div>
+
                     <div class="hasil">
-                        <div class="caption">Hasil Klasifikasi</div>
-                        <div class="Hasil_prediksi">
-                            <p id="result">
-                                <span class="hasil_prediksi" data-prediksi="{{ prediksi }}">{{ prediksi }} %
-                                    Hoaks</span>
-                            </p>
+                        <div class="chart_hasil">
+                            <div class="Hasil_prediksi">
+                                <div class="caption">Hasil Klasifikasi</div>
+
+                                <p id="result">
+                                    <span class="hasil_prediksi" data-prediksi="{{ prediksi }}"> Persentase Hoaks:
+                                        <strong>{{ prediksi }} %</strong></span>
+                                </p>
+                            </div>
                             <div>
-                                <canvas id="myChart" width="300" height="300"></canvas>
+                                <div class="chart-container">
+                                    <p class="caption">Grafik Persentase Hoaks</p>
+                                    <canvas id="myChart" width="100" height="100"></canvas>
+                                </div>
                             </div>
                         </div>
+                        <div class="ner">
+                            <p class="caption">Entitas dalam teks</p>
+                            <span class="hasil_prediksi">{{ ner }}</span>
+                        </div>
                     </div>
+
+                    
                 </div>
             </div>
         </div>

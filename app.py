@@ -117,7 +117,7 @@ def prediksi_file():
         hasil_pred = klasifikasi_file(message)
         
         # return render_template(('index.html'), prediksi = hasil_pred) 
-    return render_template(('index.html'), prediksi = hasil_pred, anchor="upload-file")   
+    return render_template(('index.html'),prediksi = hasil_pred['klasifikasi'], ner = hasil_pred['ner'], anchor="upload-file")   
     #return redirect(url_for('index', prediksi = hasil_pred))
 
   
