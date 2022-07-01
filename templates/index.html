@@ -13,102 +13,120 @@
 </head>
 
 <body>
-<div class="content">
-    <div class="title">
-       <a href="{{ url_for('index') }}" style="text-decoration:none; color:inherit;"> Klasifikasi Hoaks Seputar Vaksin Covid-19</a>
-    </div>
-    <div class="container">
-        <div class="opt-rb">
-            <!-- <span>Pilih opsi di bawah untuk memulai</span> -->
-            <form>
-                <div class="radio">
-                    <input id="radio-1" name="radio" type="radio" onclick="toggle()" checked />
-                    <label for="radio-1" class="radio-label">Klasifikasi teks kalimat</label>
-                </div>
-                <div class="radio">
-                    <input id="radio-2" name="radio" type="radio" onclick="toggle()">
-                    <label for="radio-2" class="radio-label">Upload file</label>
-                </div>
-            </form>
+    <div class="content">
+        <div class="title">
+            <a href="{{ url_for('index') }}" style="text-decoration:none; color:inherit;"> Klasifikasi Hoaks Seputar
+                Vaksin Covid-19</a>
         </div>
-        <div id="klasifikasi-teks">
-            <div class="proses">
-                <form class="form-2" action="{{ url_for('prediksi_teks') }}" method="POST" enctype="multipart/form-data">
-                    <div class="caption">Masukkan Teks</div>
-                    <ul class="form-style-1">
-                        <li>
-                            <textarea name="teks" class="textarea-field" onkeyup="btnActivation()"placeholder="Masukkan Teks">{{ pesan }}</textarea>
-                        </li>
-                        <li>
-                            <input type="reset" value="Hapus" />
-                            <button type="submit" value="Submit" class="submit" disabled>Klasifikasi Teks</button>
-                        </li>
-                    </ul>
-                </form>
-                <div class="vl"></div>
-                <div class="hasil">
-                    <div class="caption">Hasil Klasifikasi</div>
-                    <div class="Hasil_prediksi">
-                    <p id="result">
-                        <span class="hasil_prediksi" data-prediksi="{{ prediksi }}">{{ prediksi }} % Hoaks</span>
-                        <span class="hasil_prediksi">{{ ner }}</span>
-                    </p>
-                    <div>
-                        <canvas id="myChart" width="300" height="300"></canvas>
+        <div class="container">
+            <div class="opt-rb">
+                <!-- <span>Pilih opsi di bawah untuk memulai</span> -->
+                <form>
+                    <div class="radio">
+                        <input id="radio-1" name="radio" type="radio" onclick="toggle()" checked />
+                        <label for="radio-1" class="radio-label">Klasifikasi teks kalimat</label>
                     </div>
-                    </div>                    
-                </div>
+                    <div class="radio">
+                        <input id="radio-2" name="radio" type="radio" onclick="toggle()">
+                        <label for="radio-2" class="radio-label">Upload file</label>
+                    </div>
+                </form>
             </div>
-        </div>
-        <div id="upload-file">
-            <div class="upload-file">
-                <form class="form-2" action="{{ url_for('prediksi_file') }}" method="POST" enctype="multipart/form-data">
-                    <div class="caption">Pilih berkas</div>
-                    <ul class="form-style-1">
-                        <li>
-                            <div class="box-file">
-                                <i class="fas fa-file-upload fa-3x" style="color:#97a6c3;margin-right: 24px;"></i>
-                                <div class="txt-inside"><span class="select-file-txt">Masukkan dokumen anda di sini</span><br>
-                                    <small>Format <span>txt</span> | ukuran maksimal <span>1 mb</span></small>
-                                </div>   
-                                <div class="file-input">
-                                    <input type="file" id="file" name="file" class="file" accept=".txt">
-                                    <label for="file" class="input-file-trigger">Pilih file</label>
+            <div id="klasifikasi-teks">
+                <div class="proses">
+                    <form class="form-2" action="{{ url_for('prediksi_teks') }}" method="POST"
+                        enctype="multipart/form-data">
+                        <div class="caption">Masukkan Teks</div>
+                        <ul class="form-style-1">
+                            <li>
+                                <textarea name="teks" class="textarea-field" onkeyup="btnActivation()"
+                                    placeholder="Masukkan Teks">{{ pesan }}</textarea>
+                            </li>
+                            <li>
+                                <input type="reset" value="Hapus" />
+                                <button type="submit" value="Submit" class="submit" disabled>Klasifikasi Teks</button>
+                            </li>
+                        </ul>
+                    </form>
+                    <div class="vl"></div>
+                    <div class="hasil">
+                        <div class="chart_hasil">
+                            <div class="Hasil_prediksi">
+                                <div class="caption">Hasil Klasifikasi</div>
+
+                                <p id="result">
+                                    <span class="hasil_prediksi" data-prediksi="{{ prediksi }}"> Persentase Hoaks:
+                                        <strong>{{ prediksi }} %</strong></span>
+                                </p>
+                            </div>
+                            <div>
+                                <div class="chart-container">
+                                    <p class="caption">Grafik Persentase Hoaks</p>
+                                    <canvas id="myChart" width="100" height="100"></canvas>
                                 </div>
                             </div>
-                        </li>
-                        <li>
-                            <div class="filename">
-                                <p class="doc-name"></p>
-                                <span class="close">X</span>
-                            </div>
-                        </li>
-                        <li>
-                            <button type="submit" class="submit" value="Submit">Klasifikasi Teks</button>
-                        </li>
-                    </ul>
-                </form>
-                <div class="vl"></div>
-                <div class="hasil">
-                    <div class="caption">Hasil Klasifikasi</div>
-                    <div class="Hasil_prediksi">
-                    <p id="result">
-                        <span class="hasil_prediksi" data-prediksi="{{ prediksi }}">{{ prediksi }} % Hoaks</span>
-                    </p>
-                    <div>
-                        <canvas id="myChart" width="300" height="300"></canvas>
+                        </div>
+                        <div class="ner">
+                            <p class="caption">Entitas dalam teks</p>
+                            <span class="hasil_prediksi">{{ ner }}</span>
+                        </div>
+
                     </div>
-                    </div> 
+                </div>
+            </div>
+            <div id="upload-file">
+                <div class="upload-file">
+                    <form class="form-2" action="{{ url_for('prediksi_file') }}" method="POST"
+                        enctype="multipart/form-data">
+                        <div class="caption">Pilih berkas</div>
+                        <ul class="form-style-1">
+                            <li>
+                                <div class="box-file">
+                                    <i class="fas fa-file-upload fa-3x" style="color:#97a6c3;margin-right: 24px;"></i>
+                                    <div class="txt-inside"><span class="select-file-txt">Masukkan dokumen anda di
+                                            sini</span><br>
+                                        <small>Format <span>txt</span> | ukuran maksimal <span>1 mb</span></small>
+                                    </div>
+                                    <div class="file-input">
+                                        <input type="file" id="file" name="file" class="file" accept=".txt">
+                                        <label for="file" class="input-file-trigger">Pilih file</label>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="filename">
+                                    <p class="doc-name"></p>
+                                    <span class="close">X</span>
+                                </div>
+                            </li>
+                            <li>
+                                <button type="submit" class="submit" value="Submit">Klasifikasi Teks</button>
+                            </li>
+                        </ul>
+                    </form>
+                    <div class="vl"></div>
+                    <div class="hasil">
+                        <div class="caption">Hasil Klasifikasi</div>
+                        <div class="Hasil_prediksi">
+                            <p id="result">
+                                <span class="hasil_prediksi" data-prediksi="{{ prediksi }}">{{ prediksi }} %
+                                    Hoaks</span>
+                            </p>
+                            <div>
+                                <canvas id="myChart" width="300" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<script type="text/javascript" src="{{ url_for('static', filename='script/script.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='script/script.js') }}"></script>
 
-<script type="text/javascript" src="{{ url_for('static', filename='script/grafik.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='script/grafik.js') }}"></script>
 
-<!-- <script src="D:\FADIL\klasifikasi-hoaks\node_modules\chartjs\dist\chart.js"></script> -->
+    <!-- <script src="D:\FADIL\klasifikasi-hoaks\node_modules\chartjs\dist\chart.js"></script> -->
 </body>
+
 </html>
