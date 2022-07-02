@@ -2,7 +2,7 @@ from fileinput import filename
 from tkinter import ANCHOR
 from unittest import result
 from click import option
-from flask import Flask, redirect, url_for, render_template, request, send_from_directory
+from flask import Flask,flash, redirect, url_for, render_template, request, send_from_directory
 import os
 from jinja2 import Markup
 from werkzeug.utils import secure_filename
@@ -23,12 +23,18 @@ from wtforms import FileField
 from flaskext.markdown import Markdown
 
 app = Flask(__name__)
+app.secret_key = 'super secret key'
+app.config['SESSION_TYPE'] = 'filesystem'
 app.config["DEBUG"] = True
 app.config['UPLOAD_PATH'] = "uploaded_files"
 app.config['ALLOWED_EXTENSIONS'] = ['txt']
 app.config['UPLOAD_EXTENSIONS'] = ['.txt']
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
 Markdown(app)
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 HTML_WRAPPER = """<div style="overflow-x: auto; border: 1px solid #e6e9ef; border-radius: 0.25rem; padding: 1rem">{}</div>"""
 
@@ -87,22 +93,38 @@ def klasifikasi_file(sentences):
 def upload_files():
     content = dict()
     
-    if request.method == "POST":        
-        f = request.files['file']
-        filename = secure_filename(f.filename)
+    if request.method == "POST":   
+
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(url_for('index'))              
         
-        if filename !='':
-            file_ext = os.path.splitext(filename)[1]
-            if file_ext not in app.config['UPLOAD_EXTENSIONS']:
-                return "File tidak mendukung", 400    
+        f = request.files['file']                
+        
+        if f.filename == '':
+            flash('No selected file')
+            return redirect(url_for('index'))
+
+        if f and allowed_file(f.filename):
+            filename = secure_filename(f.filename)
+            # file_ext = os.path.splitext(filename)[1]
+
+            # if file_ext not in app.config['UPLOAD_EXTENSIONS']:
+            #     return "File tidak mendukung", 400  
+
             saved_file = f.save(os.path.join(app.config['UPLOAD_PATH'],filename))
             file = open(app.config['UPLOAD_PATH']+"/"+filename,"r")   
             content['filename'] = filename     
             content['isi'] = file.read()
-            file.close()            
+            file.close()
+
+            os.remove(app.config['UPLOAD_PATH']+"/"+filename)     
+            return content   
+        # else:
+        #     flash("Pilih 1 file")
+        #     return render_template('index.html')       
         #return ""   
-    os.remove(app.config['UPLOAD_PATH']+"/"+filename)     
-    return content
+    
 
 @app.route('/', methods=['GET'])
 def index():    
@@ -119,14 +141,44 @@ def prediksi_teks():
 
 @app.route('/klasifikasi-file', methods=['GET',"POST"])
 def prediksi_file():
-    if request.method == "POST":  
+    content = dict()
+    
+    if request.method == "POST":   
+
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(url_for('index'))              
+        
+        f = request.files['file']                
+        
+        if f.filename == '':
+            flash('No selected file')
+            return redirect(url_for('index'))
+
+        if f and allowed_file(f.filename):
+            filename = secure_filename(f.filename)
+            # file_ext = os.path.splitext(filename)[1]
+
+            # if file_ext not in app.config['UPLOAD_EXTENSIONS']:
+            #     return "File tidak mendukung", 400  
+
+            saved_file = f.save(os.path.join(app.config['UPLOAD_PATH'],filename))
+            file = open(app.config['UPLOAD_PATH']+"/"+filename,"r")   
+            content['filename'] = filename     
+            content['isi'] = file.read()
+            file.close()
+
+            os.remove(app.config['UPLOAD_PATH']+"/"+filename)     
+            # return content
+
+    # if request.method == "POST":  
         # filename = upload_files()
         # file = open(app.config['UPLOAD_PATH']+"/"+filename,"r")        
-        message = upload_files()
-        hasil_pred = klasifikasi_file(message['isi'])
+        # message = upload_files()
+        hasil_pred = klasifikasi_file(content['isi'])
         
         # return render_template(('index.html'), prediksi = hasil_pred) 
-    return render_template(('index.html'),prediksi_file = hasil_pred['klasifikasi'], ner_file = hasil_pred['ner'], display="flex", filename = message['filename'])   
+    return render_template(('index.html'),prediksi_file = hasil_pred['klasifikasi'], ner_file = hasil_pred['ner'], display="flex", filename = content['filename'])   
     #return redirect(url_for('index', prediksi = hasil_pred))
 
   
@@ -134,6 +186,7 @@ def prediksi_file():
 @app.errorhandler(413)
 def too_large(e):
     return "Ukuran file melebihi 1 mb", 413
+    
 
 # @app.route('/uploaded_files/<filename>')
 # def upload(filename):

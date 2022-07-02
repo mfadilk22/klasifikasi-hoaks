@@ -1,12 +1,25 @@
+// import swal from 'sweetalert';
+
+// el2.style.display = "none";
 let r1 = document.getElementById('radio-1');
 let r2 = document.getElementById('radio-2');
 
 let el1 = document.getElementById('klasifikasi-teks');
 let el2 = document.getElementById('upload-file');
 
-el2.style.display = "none";
+// const radioButtons = document.querySelectorAll('input[name="radio"]');
+// for(const radioButton of radioButtons){
+//     radioButton.addEventListener('change', showSelected);
+// }
 
-function toggle(){
+// function showSelected(e) {
+//     console.log(e);
+//     if (this.checked) {
+//         el2.style.display = 'flex';
+//     }
+// }
+
+function toggle(){    
     if (r1.checked){
         el1.style.display = 'flex';
         el2.style.display = 'none';
@@ -16,6 +29,18 @@ function toggle(){
         el2.style.display = 'flex';
     }
 }
+
+// r1.addEventListener ( "click", function(){
+//     el1.style.display = 'flex';
+//     el2.style.display = 'none';
+// });
+
+// r2.addEventListener( "click", function() {
+//     el1.style.display = 'none';
+//     el2.style.display = 'flex';
+// });
+
+
 
 let submit_btn = document.querySelectorAll("button");
 let txtarea = document.querySelector("textarea");
@@ -36,16 +61,38 @@ var button = document.querySelector(".input-file-trigger");
 let closebtn = document.querySelector(".close");
 let filename = document.querySelector(".filename");
 let submit_file_btn = document.getElementById("upload-file").getElementsByClassName("submit")[0];
+let hoaks_file = document.getElementById("myStrong");
+let input = document.getElementById("input");
 
-
+input.onchange = () => {
+    submit_btn[1].disabled = !this.value;
+}
 
 // filename.style.display = 'none';
+function checkFile(form_2){   
+    var fileVal = form_2.elements['file'].value;
+
+    if (fileVal == ""){
+        // submit_btn[0].disabled = !this.value;
+        swal ("Oops", "File tidak boleh kosong","error" );
+        
+    }else{
+        form_2.submit();
+    }
+}
+
 button.addEventListener( "click", function() {
     fileInput.focus();
     return false;
-    });
+});
+
+// submit_file_btn.addEventListener( "click", function() {
+//     r2.checked=true;
+//     return false;
+// });
 
 fileInput.addEventListener( "change", function() {  
+    submit_btn[1].disabled = !this.value;
     filename.style.display = 'flex'
     the_return.innerHTML = this.files[0].name;  
 });

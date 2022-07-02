@@ -8,11 +8,24 @@
     <title>Klasifikasi Hoaks</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='Icon2.ico') }}">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://kit.fontawesome.com/14481c1a0f.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
 </head>
 
 <body>
+    <!-- {% with messages = get_flashed_messages() %} 
+        {% if messages %}
+            {% for message in messages %}  
+            <div class="alert alert-warning" role="alert">
+                {{ message }}
+                                
+            </div>
+            {% endfor %}  
+        {% endif %}  
+    {% endwith %} -->
+
     <div class="content">
         <div class="title">
             <a href="{{ url_for('index') }}" style="text-decoration:none; color:inherit;"> Klasifikasi Hoaks Seputar
@@ -23,11 +36,11 @@
                 <!-- <span>Pilih opsi di bawah untuk memulai</span> -->
                 <form>
                     <div class="radio">
-                        <input id="radio-1" name="radio" type="radio" onclick="toggle()" checked />
+                        <input id="radio-1" name="radio" type="radio" value="teks" onclick="toggle()" checked />
                         <label for="radio-1" class="radio-label">Klasifikasi teks kalimat</label>
                     </div>
                     <div class="radio">
-                        <input id="radio-2" name="radio" type="radio" onclick="toggle()">
+                        <input id="radio-2" name="radio" type="radio" value="file" onclick="toggle()">
                         <label for="radio-2" class="radio-label">Upload file</label>
                     </div>
                 </form>
@@ -75,7 +88,7 @@
 
             <div id="upload-file">
                 <div class="upload-file">
-                    <form class="form-2" action="{{ url_for('prediksi_file') }}" method="POST"
+                    <form class="form-2" name="form_2" action="{{ url_for('prediksi_file') }}" method="POST"
                         enctype="multipart/form-data">
                         <div class="caption">Pilih berkas</div>
                         <ul class="form-style-1">
@@ -86,7 +99,7 @@
                                         <small>Format <span>txt</span> | ukuran maksimal <span>1 mb</span></small>
                                     </div>
                                     <div class="file-input">
-                                        <input type="file" id="file" name="file" class="file" accept=".txt" required>
+                                        <input type="file" id="file" name="file" class="file" accept=".txt" >
                                         <label for="file" class="input-file-trigger">Pilih file</label>
                                     </div>
                                 </div>
@@ -98,7 +111,7 @@
                                 </div>
                             </li>
                             <li>
-                                <button type="submit" class="submit" value="checked">Klasifikasi Teks</button>
+                                <button type="submit" class="submit" value="checked" onclick="checkFile(this.form)" disabled>Klasifikasi Dokumen</button>
                             </li>
                         </ul>
                     </form>
@@ -110,7 +123,7 @@
                                 <div class="caption">Hasil Klasifikasi</div>
 
                                 <span class="hasil_prediksi_file" data-prediksi="{{ prediksi_file }}"> Persentase Hoaks:
-                                    <strong>{{ prediksi_file }} %</strong></span>
+                                    <strong id="myStrong">{{ prediksi_file }} %</strong></span>
 
                             </div>
                             <div>
