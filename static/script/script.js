@@ -1,12 +1,12 @@
+let r1 = document.getElementById('radio-1');
+let r2 = document.getElementById('radio-2');
+
+let el1 = document.getElementById('klasifikasi-teks');
+let el2 = document.getElementById('upload-file');
+
+el2.style.display = "none";
+
 function toggle(){
-    let r1 = document.getElementById('radio-1');
-    let r2 = document.getElementById('radio-2');
-
-    let el1 = document.getElementById('klasifikasi-teks');
-    let el2 = document.getElementById('upload-file');
-
-    el2.style.display = "none";
-
     if (r1.checked){
         el1.style.display = 'flex';
         el2.style.display = 'none';
@@ -19,6 +19,12 @@ function toggle(){
 
 let submit_btn = document.querySelectorAll("button");
 let txtarea = document.querySelector("textarea");
+let submit_btn_value = submit_btn.value;
+
+if (submit_btn_value === "checked"){
+    el1.style.display = 'none';
+    el2.style.display = 'flex';
+}
 
 txtarea.addEventListener('keyup', function() {
     submit_btn[0].disabled = !this.value;
@@ -31,12 +37,13 @@ let closebtn = document.querySelector(".close");
 let filename = document.querySelector(".filename");
 let submit_file_btn = document.getElementById("upload-file").getElementsByClassName("submit")[0];
 
-filename.style.display = 'none';
 
+
+// filename.style.display = 'none';
 button.addEventListener( "click", function() {
     fileInput.focus();
     return false;
- });
+    });
 
 fileInput.addEventListener( "change", function() {  
     filename.style.display = 'flex'
@@ -47,7 +54,9 @@ closebtn.addEventListener("click", function() {
     filename.style.display = 'none';
 });
 
-submit_file_btn.addEventListener("click", function() {
-    el2.style.display = 'none';
-});
+
+
+// submit_file_btn.addEventListener("click", function() {
+//     el2.style.display = 'none';
+// });
 

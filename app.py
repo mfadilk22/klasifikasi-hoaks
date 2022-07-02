@@ -1,6 +1,7 @@
 from fileinput import filename
 from tkinter import ANCHOR
 from unittest import result
+from click import option
 from flask import Flask, redirect, url_for, render_template, request, send_from_directory
 import os
 from jinja2 import Markup
@@ -36,6 +37,10 @@ model_path = 'models/'
 model = tf.keras.models.load_model(model_path+"model_FINAL.h5")
 model_ner = spacy.load(model_path+"NER_3")
 
+
+colors= {'ORGANISASI':'#54dda4', "ORANG":'#54dda4', "LOKASI":'#54dda4', "PENYAKIT":'#54dda4', "VAKSIN":'#54dda4'}
+options = {'ents': ['ORGANISASI',"ORANG","LOKASI","PENYAKIT","VAKSIN"], 'colors':colors}
+
 # load tokenizer
 token = Tokenizer()
 with open(model_path+'token_FINAL.pickle', 'rb') as handle:
@@ -53,7 +58,7 @@ def klasifikasi_kata(sentences):
     hasil_dict["klasifikasi"] = res_string
 
     doc = model_ner(sentences)
-    hasil_doc = displacy.render(doc, style="ent")
+    hasil_doc = displacy.render(doc, style="ent", options=options)
     hasil_doc = Markup(hasil_doc)
     # hasil_doc = hasil_doc.replace("\n\n","\n")
     hasil_dict['ner'] = hasil_doc
@@ -72,7 +77,7 @@ def klasifikasi_file(sentences):
     hasil_dict["klasifikasi"] = res_string
 
     doc = model_ner(sentences)
-    hasil_doc = displacy.render(doc, style="ent")
+    hasil_doc = displacy.render(doc, style="ent", options=options)
     hasil_doc = Markup(hasil_doc)
     # hasil_doc = hasil_doc.replace("\n\n","\n")
     hasil_dict['ner'] = hasil_doc
@@ -80,16 +85,20 @@ def klasifikasi_file(sentences):
     return hasil_dict
 
 def upload_files():
+    content = dict()
+    
     if request.method == "POST":        
         f = request.files['file']
         filename = secure_filename(f.filename)
+        
         if filename !='':
             file_ext = os.path.splitext(filename)[1]
             if file_ext not in app.config['UPLOAD_EXTENSIONS']:
                 return "File tidak mendukung", 400    
             saved_file = f.save(os.path.join(app.config['UPLOAD_PATH'],filename))
-            file = open(app.config['UPLOAD_PATH']+"/"+filename,"r")        
-            content = file.read()
+            file = open(app.config['UPLOAD_PATH']+"/"+filename,"r")   
+            content['filename'] = filename     
+            content['isi'] = file.read()
             file.close()            
         #return ""   
     os.remove(app.config['UPLOAD_PATH']+"/"+filename)     
@@ -114,10 +123,10 @@ def prediksi_file():
         # filename = upload_files()
         # file = open(app.config['UPLOAD_PATH']+"/"+filename,"r")        
         message = upload_files()
-        hasil_pred = klasifikasi_file(message)
+        hasil_pred = klasifikasi_file(message['isi'])
         
         # return render_template(('index.html'), prediksi = hasil_pred) 
-    return render_template(('index.html'),prediksi_file = hasil_pred['klasifikasi'], ner_file = hasil_pred['ner'])   
+    return render_template(('index.html'),prediksi_file = hasil_pred['klasifikasi'], ner_file = hasil_pred['ner'], display="flex", filename = message['filename'])   
     #return redirect(url_for('index', prediksi = hasil_pred))
 
   
