@@ -64,22 +64,22 @@ let submit_file_btn = document.getElementById("upload-file").getElementsByClassN
 let hoaks_file = document.getElementById("myStrong");
 let input = document.getElementById("input");
 
-input.onchange = () => {
-    submit_btn[1].disabled = !this.value;
-}
+// input.onchange = () => {
+//     submit_btn[1].disabled = !this.value;
+// }
 
-// filename.style.display = 'none';
-function checkFile(form_2){   
-    var fileVal = form_2.elements['file'].value;
+filename.style.display = 'flex';
+// function checkFile(form_2){   
+//     var fileVal = form_2.elements['file'].value;
 
-    if (fileVal == ""){
-        // submit_btn[0].disabled = !this.value;
-        swal ("Oops", "File tidak boleh kosong","error" );
+//     if (fileVal == ""){
+//         // submit_btn[0].disabled = !this.value;
+//         swal ("Oops", "File tidak boleh kosong","error" );
         
-    }else{
-        form_2.submit();
-    }
-}
+//     }else{
+//         form_2.submit();
+//     }
+// }
 
 button.addEventListener( "click", function() {
     fileInput.focus();
@@ -92,7 +92,7 @@ button.addEventListener( "click", function() {
 // });
 
 fileInput.addEventListener( "change", function() {  
-    submit_btn[1].disabled = !this.value;
+    submit_btn[1].disabled = false;
     filename.style.display = 'flex'
     the_return.innerHTML = this.files[0].name;  
 });
