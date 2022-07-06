@@ -57,7 +57,7 @@ def klasifikasi_kata(sentences):
 
     teks = [sentences]
     sequences = token.texts_to_sequences(teks)
-    padded = pad_sequences(sequences, maxlen=20, padding="post", truncating="post")
+    padded = pad_sequences(sequences, maxlen=22, padding="post", truncating="post")
     res = model.predict(padded)
     res_rounded_value = round((res[0][0]*100),2)
     res_string = res_rounded_value
@@ -76,7 +76,7 @@ def klasifikasi_file(sentences):
 
     teks = [sentences]
     sequences = token.texts_to_sequences(teks)
-    padded = pad_sequences(sequences, maxlen=20, padding="post", truncating="post")
+    padded = pad_sequences(sequences, maxlen=22, padding="post", truncating="post")
     res = model.predict(padded) 
     res_rounded_value = round((res[0][0]*100),2)
     res_string = res_rounded_value  
