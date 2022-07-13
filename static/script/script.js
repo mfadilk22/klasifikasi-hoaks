@@ -51,6 +51,18 @@ if (submit_btn_value === "checked"){
     el2.style.display = 'flex';
 }
 
+window.onload = textareaLengthCheck();
+
+function textareaLengthCheck() {
+    var txtArea = txtarea.value.length;
+    var charactersLeft = 144 - txtArea;
+    var count = document.getElementById('countText');
+    count.innerHTML = "Sisa karakter: " + charactersLeft;
+}
+
+txtarea.addEventListener('keyup', textareaLengthCheck, false);
+txtarea.addEventListener('keydown', textareaLengthCheck, false);
+
 txtarea.addEventListener('keyup', function() {
     submit_btn[0].disabled = !this.value;
   });
@@ -64,6 +76,8 @@ let submit_file_btn = document.getElementById("upload-file").getElementsByClassN
 let hoaks_file = document.getElementById("myStrong");
 let input = document.getElementById("input");
 
+
+
 // input.onchange = () => {
 //     submit_btn[1].disabled = !this.value;
 // }
@@ -73,7 +87,7 @@ filename.style.display = 'flex';
 //     var fileVal = form_2.elements['file'].value;
 
 //     if (fileVal == ""){
-//         // submit_btn[0].disabled = !this.value;
+//          submit_btn[0].disabled = !this.value;
 //         swal ("Oops", "File tidak boleh kosong","error" );
         
 //     }else{

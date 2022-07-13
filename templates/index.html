@@ -53,8 +53,9 @@
                         <ul class="form-style-1">
                             <li>
                                 <textarea name="teks" class="textarea-field" onkeyup="btnActivation()"
-                                    placeholder="Masukkan Teks">{{ pesan }}</textarea>
+                                    placeholder="Masukkan Teks" maxlength="144  ">{{ pesan }}</textarea>
                             </li>
+                            <li><span id="countText">Total karakter: </span></li>
                             <li>
                                 <input type="reset" value="Hapus" />
                                 <button type="submit" value="Submit" class="submit" disabled>Klasifikasi Teks</button>
