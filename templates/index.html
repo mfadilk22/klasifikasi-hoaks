@@ -53,7 +53,7 @@
                         <ul class="form-style-1">
                             <li>
                                 <textarea name="teks" class="textarea-field" onkeyup="btnActivation()"
-                                    placeholder="Masukkan Teks" maxlength="144  ">{{ pesan }}</textarea>
+                                    placeholder="Masukkan Teks" maxlength="144">{{ pesan }}</textarea>
                             </li>
                             <li><span id="countText">Total karakter: </span></li>
                             <li>
@@ -62,9 +62,9 @@
                             </li>
                         </ul>
                     </form>
-                    <div class="vl"></div>
+                    <div class="hl"></div>
                     <div class="hasil">
-                        <div class="chart_hasil">
+                        
                             <div class="Hasil_prediksi">
                                 <div class="caption">Hasil Klasifikasi</div>
 
@@ -78,10 +78,44 @@
                                     <canvas id="myChart" width="100" height="100"></canvas>
                                 </div>
                             </div>
-                        </div>
+                        
                         <div class="ner">
                             <p class="caption">Entitas dalam teks</p>
-                            <span class="hasil_prediksi">{{ ner_teks }}</span>
+                            <table>
+                                <tr>
+                                    <th>Kata</th>
+                                    <th>Entitas</th>
+                                </tr>
+                                {% for item in ner %}
+                                <tr>
+                                    <td>
+                                        <span class="hasil_prediksi text">{{ item[0] }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="hasil_prediksi label">{{ item[1] }}</span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                            <!-- <ul>
+                                {% for item in ner %}                                
+                                <li class = "entitas">
+                                    <span class="hasil_prediksi">{{ item[0] }}</span>
+                                    <span class="hasil_prediksi label">{{ item[1] }}</span>
+                                </li>
+                                {% endfor %}                                
+                            </ul> -->
+                            
+                            
+                            
+                            
+                            
+                            <!-- {% for item1 in text %}
+                                <span class="hasil_prediksi">{{ item1 }}</span>
+                            {% endfor %}
+                            {% for item2 in label %}
+                                <span class="hasil_prediksi">{{ item2 }}</span>
+                            {% endfor %} -->
                         </div>
                     </div>
                 </div>

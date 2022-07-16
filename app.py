@@ -54,6 +54,9 @@ with open(model_path+'token_FINAL.pickle', 'rb') as handle:
     
 def klasifikasi_kata(sentences):
     hasil_dict = dict()
+    # hasil_dict['text'] = []
+    # hasil_dict['label'] = []
+    hasil_dict['doc'] = []
 
     teks = [sentences]
     sequences = token.texts_to_sequences(teks)
@@ -65,8 +68,11 @@ def klasifikasi_kata(sentences):
 
     doc = model_ner(sentences)
     hasil_doc = displacy.render(doc, style="ent", options=options)
-    hasil_doc = Markup(hasil_doc)
+    # hasil_doc = Markup(hasil_doc)
     # hasil_doc = hasil_doc.replace("\n\n","\n")
+    for ent in doc.ents:        
+        hasil_dict['doc'].append([ent.text, ent.label_])    
+        
     hasil_dict['ner'] = hasil_doc
 
     return hasil_dict
@@ -136,7 +142,7 @@ def prediksi_teks():
         message = request.form['teks']
         hasil_pred = klasifikasi_kata(message)
         # return render_template(('index.html'), prediksi = hasil_pred)    
-    return render_template(('index.html'), prediksi_teks = hasil_pred['klasifikasi'], ner_teks = hasil_pred['ner'],pesan = message)
+    return render_template(('index.html'), prediksi_teks = hasil_pred['klasifikasi'], ner = hasil_pred['doc'], pesan = message)
     #return redirect(url_for('index', prediksi = hasil_pred))
 
 @app.route('/klasifikasi-file', methods=['GET',"POST"])
