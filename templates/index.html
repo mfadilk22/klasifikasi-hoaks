@@ -167,10 +167,44 @@
                                     <canvas id="myChart2" width="100" height="100"></canvas>
                                 </div>
                             </div>
-                        </div>
+                        
                         <div class="ner">
                             <p class="caption">Entitas dalam teks</p>
-                            <span class="hasil_prediksi">{{ ner_file }}</span>
+                            <table>
+                                <tr>
+                                    <th>Kata</th>
+                                    <th>Entitas</th>
+                                </tr>
+                                {% for item in ner %}
+                                <tr>
+                                    <td>
+                                        <span class="hasil_prediksi text">{{ item[0] }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="hasil_prediksi label">{{ item[1] }}</span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                            <!-- <ul>
+                                {% for item in ner %}                                
+                                <li class = "entitas">
+                                    <span class="hasil_prediksi">{{ item[0] }}</span>
+                                    <span class="hasil_prediksi label">{{ item[1] }}</span>
+                                </li>
+                                {% endfor %}                                
+                            </ul> -->
+                            
+                            
+                            
+                            
+                            
+                            <!-- {% for item1 in text %}
+                                <span class="hasil_prediksi">{{ item1 }}</span>
+                            {% endfor %}
+                            {% for item2 in label %}
+                                <span class="hasil_prediksi">{{ item2 }}</span>
+                            {% endfor %} -->
                         </div>
                     </div>
 

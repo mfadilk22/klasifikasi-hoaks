@@ -79,6 +79,7 @@ def klasifikasi_kata(sentences):
 
 def klasifikasi_file(sentences):
     hasil_dict = dict()
+    hasil_dict['doc'] = []
 
     teks = [sentences]
     sequences = token.texts_to_sequences(teks)
@@ -92,6 +93,15 @@ def klasifikasi_file(sentences):
     hasil_doc = displacy.render(doc, style="ent", options=options)
     hasil_doc = Markup(hasil_doc)
     # hasil_doc = hasil_doc.replace("\n\n","\n")
+    hasil_dict['ner'] = hasil_doc
+
+    doc = model_ner(sentences)
+    hasil_doc = displacy.render(doc, style="ent", options=options)
+    # hasil_doc = Markup(hasil_doc)
+    # hasil_doc = hasil_doc.replace("\n\n","\n")
+    for ent in doc.ents:        
+        hasil_dict['doc'].append([ent.text, ent.label_])    
+        
     hasil_dict['ner'] = hasil_doc
 
     return hasil_dict
@@ -184,7 +194,7 @@ def prediksi_file():
         hasil_pred = klasifikasi_file(content['isi'])
         
         # return render_template(('index.html'), prediksi = hasil_pred) 
-    return render_template(('index.html'),prediksi_file = hasil_pred['klasifikasi'], ner_file = hasil_pred['ner'], display="flex", filename = content['filename'])   
+    return render_template(('index.html'),prediksi_file = hasil_pred['klasifikasi'], ner = hasil_pred['doc'], display="flex", filename = content['filename'])   
     #return redirect(url_for('index', prediksi = hasil_pred))
 
   

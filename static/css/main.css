@@ -155,6 +155,7 @@ input[type="radio"]{
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+    width: 100%;
 }
 
 .form-style-1 button[type=submit], .form-style-1 button[type=button]{
@@ -241,6 +242,7 @@ input[type="radio"]{
 }
 .upload-file{
     display:flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     margin-top: 12px;
@@ -252,7 +254,7 @@ input[type="radio"]{
     display: flex;
     justify-content: flex-start;
     align-items:center ;
-    width: 446px;
+    width: 100%;
     border-radius: 5px;
     padding: 16px;    
     background:#fafbfd;
@@ -260,6 +262,10 @@ input[type="radio"]{
     border: 1px dashed #97a6c3;
     stroke-dashoffset:23;
     stroke-linecap:round;
+}
+
+.form-2{
+    width: 100%;
 }
 .select-file-txt{
     color: #262730;
@@ -311,7 +317,7 @@ td{
     display:flex;
     align-items: center;
     justify-content: space-between;
-    width:446px;
+    width:100%;
     background: #fcfcfc;
     margin-bottom: 20px;
     border-radius:5px;
